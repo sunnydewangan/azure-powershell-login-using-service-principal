@@ -16,6 +16,12 @@
 [pscredential]$credential = New-Object System.Management.Automation.PSCredential ($appId, $secureStringpassword)
 
 # Connect to Azure Account
-Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenant
+Connect-AzAccount -ServicePrincipal -Credential $credential -TenantId $tenant
+
+# Get the authentication context
+$context = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile.DefaultContext
+
+# This will print out the Service Principal Secret
+$context.Account.ExtendedProperties.ServicePrincipalSecret
 
 ```
